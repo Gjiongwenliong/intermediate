@@ -1,0 +1,6 @@
+{
+    "name": "Cash",
+    "account_type": "asset",
+    "normal_balance": "debit",
+    "balance": 10000.0
+}

@@ -6,6 +6,9 @@
 # Add methods:
 # - debit(amount): increases balance if normal_balance is debit, otherwise decreases
 # - credit(amount): increases balance if normal_balance is credit, otherwise decreases
+import json
+
+
 class Account:
     def __init__(self, name, account_type):
         self.name = name
@@ -41,12 +44,23 @@ def create_account():
     account_type = input("Enter account type (asset, liability, equity, revenue, expense): ")
     return Account(name, account_type)  
 # main program to test the Account class
+# keep record of account transactions into a json fileimport json
+def save_account(account):  
+    with open('account_data.json', 'w') as f:
+        json.dump({
+            'name': account.name,
+            'account_type': account.account_type,
+            'normal_balance': account.normal_balance,
+            'balance': account.balance
+        }, f, indent=4)
+# call save_account before exiting the program
 if __name__ == "__main__":
     account = create_account()
     print(account)
     while True:
         action = input("Enter 'debit' or 'credit' to update the account, or 'exit' to quit: ")
         if action == 'exit':
+            save_account(account)
             break
         amount = float(input("Enter amount: "))
         if action == 'debit':
@@ -55,5 +69,4 @@ if __name__ == "__main__":
             account.credit(amount)
         else:
             print("Invalid action. Please enter 'debit', 'credit', or 'exit'.")
-        print(account)      
-    
+        print(account)
