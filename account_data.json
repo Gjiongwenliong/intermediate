@@ -1,6 +1,14 @@
-{
-    "name": "Cash",
-    "account_type": "asset",
-    "normal_balance": "debit",
-    "balance": 10000.0
-}
+[
+    {
+        "name": "Cash",
+        "account_type": "asset",
+        "normal_balance": "debit",
+        "balance": 100000.0
+    },
+    {
+        "name": "Prepaid Expense",
+        "account_type": "asset",
+        "normal_balance": "debit",
+        "balance": 1000.0
+    }
+]

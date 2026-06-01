@@ -45,14 +45,29 @@ def create_account():
     return Account(name, account_type)  
 # main program to test the Account class
 # keep record of account transactions into a json fileimport json
+# modified following function to append account to json file instead of overwriting it      
 def save_account(account):  
+    try:
+        with open('account_data.json', 'r') as f:
+            data = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = []
+
+    # Backward compatibility: if existing JSON is a single account object,
+    # normalize it into a list before appending.
+    if isinstance(data, dict):
+        data = [data]
+    elif not isinstance(data, list):
+        data = []
+
+    data.append({
+        'name': account.name,
+        'account_type': account.account_type,
+        'normal_balance': account.normal_balance,
+        'balance': account.balance
+    })
     with open('account_data.json', 'w') as f:
-        json.dump({
-            'name': account.name,
-            'account_type': account.account_type,
-            'normal_balance': account.normal_balance,
-            'balance': account.balance
-        }, f, indent=4)
+        json.dump(data, f, indent=4)    
 # call save_account before exiting the program
 if __name__ == "__main__":
     account = create_account()
